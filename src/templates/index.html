@@ -1,0 +1,176 @@
+{% extends './base.html' %}
+{% block container %}
+      <!-- Page Heading -->
+      <h1 class="my-4">Searching System
+        <small>NB Shopping</small>
+      </h1>
+      <form action='/search' method='get' style="margin-top:30px;margin-bottom:30px">
+      <div class="row">
+        <div class="col-12">
+          <div class="input-group">
+            <input class="form-control border-secondary py-2" name="q" type="search" placeholder="Search..." value="{{context.q}}">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="submit" input="submit" >
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 group-option" style="font-size: 18px">
+            <label>Price:  </label>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="priceRange" id="range1" value="0" {% if context.price == "0" %}checked {% endif %}> 無
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="priceRange" id="range2" value="10000" {% if context.price == "10000" %}checked {% endif %}> 10000元以下
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="priceRange" id="range3" value="20000" {% if context.price == "20000" %}checked {% endif %}> 10000~20000元
+              </label>
+            </div>
+            <div class="form-check form-check-inline disabled">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="priceRange" id="range4" value="30000" {% if context.price == "30000" %}checked {% endif %}> 20000~30000元
+              </label>
+            </div>
+            <div class="form-check form-check-inline disabled">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="priceRange" id="range5" value="40000" {% if context.price == "40000" %}checked {% endif %}> 30000~40000元
+              </label>
+            </div>
+            <div class="form-check form-check-inline disabled">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="priceRange" id="range6" value="50000" {% if context.price == "50000" %}checked {% endif %}> 40000~50000元
+              </label>
+            </div>
+            <div class="form-check form-check-inline disabled">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="priceRange" id="range7" value="60000" {% if context.price == "60000" %}checked {% endif %}> 50000元以上
+              </label>
+            </div>
+        </div>
+
+        <div class="col-12 group-option" style="font-size: 18px">
+            <label>RAM:  </label>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="Ram" id="Ram1" value="0" {% if context.ram == "0" %}checked {% endif %}> 無
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="Ram" id="Ram2" value="4" {% if context.ram == "4" %}checked {% endif %}> 4G
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="Ram" id="Ram3" value="8" {% if context.ram == "8" %}checked {% endif %}> 8G
+              </label>
+            </div>
+            <div class="form-check form-check-inline disabled">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="Ram" id="Ram4" value="16" {% if context.ram == "16" %}checked {% endif %}> 16G
+              </label>
+            </div>
+        </div>
+
+        <div class="col-12 group-option" style="font-size: 18px">
+            <label>Windows Size:  </label>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="Size" id="Size1" value="0" {% if context.screen == "0" %}checked {% endif %}> 無
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="Size" id="Size2" value="14" {% if context.screen == "14" %}checked {% endif %}> 14吋以下
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="Size" id="Size3" value="15" {% if context.screen == "15" %}checked {% endif %}> 15吋
+              </label>
+            </div>
+            <div class="form-check form-check-inline disabled">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="Size" id="Siz4" value="16" {% if context.screen == "16" %}checked {% endif %}> 16吋
+              </label>
+            </div>
+            <div class="form-check form-check-inline disabled">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="Size" id="Siz45" value="17" {% if context.screen == "17" %}checked {% endif %}> 16吋以上
+              </label>
+            </div>
+          </div>
+      </form>
+      <div class="row">
+          <div class="col-xl-9">
+            <div class="row">
+              {% if context.products %}
+              {% for product in context.products %}
+              <div class="col-lg-6 portfolio-item">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <h4 class="card-title text-truncate">
+                      <a href="{{product.post_url[0]}}">{{product.post_title[0]}}</a>
+                    </h4>
+                    <div class="card-text">
+                      {% if product.product_ram %}
+                      <p>記憶體: {{product.product_ram[0]}}</p>
+                      {% endif %}
+                      {% if product.product_os %}
+                      <p>作業系統: {{product.product_os[0]}}</p>
+                      {% else %}
+                      <p>作業系統:</p>
+                      {% endif %}
+                      {% if product.product_screen %}
+                      <p>螢幕大小: {{product.product_screen[0]}}</p>
+                      {% endif %}
+                      <p>交易價格： {{product.product_price}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+              {% else %}
+              <!-- <h2>Try other keywords or limits</h2> -->
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="col-xl-3">
+            <div class="row">
+              <div class="col-lg-12 portfolio-item">
+                <div class="card h-100">
+                  <div class="card-body">
+                    {% if context.posts %}
+                    <h4 class="card-title">
+                      <a>Reference</a>
+                    </h4>
+                    <div class="list-group" style="font-size: 15px">
+                      {% for post in context.posts %}
+                      <a href="{{post.post_url[0]}}" class="list-group-item border-light" style="
+                      overflow: hidden;
+                      text-overflow:ellipsis;
+                      text-align: center;
+                      white-space: nowrap;">{{post.post_title[0]}}</a>
+                      {% endfor %}
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- /.row -->
+
+    </div>
+    <!-- /.container -->
+{% endblock %}
