@@ -1,0 +1,5 @@
+Flask==1.0.2
+Flask-RESTful==0.3.6
+Werkzeug
+pysolr==3.7.0
+attrs
