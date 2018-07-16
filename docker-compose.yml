@@ -1,8 +1,24 @@
-version: '2.1'
+version: '3.3'
 
 services:
+  solr:
+    build: ./deploy/solr
+    ports:
+      - "8983:8983"
   proj:
     image: proj
-    build: .
+    build:
+      context: .
+      dockerfile: ./deploy/site/Dockerfile
+    command: sh /app/src/website_up.sh
     ports:
       - 5000:5000
+    depends_on:
+      - solr
+    links:
+      - solr
+    volumes:
+      - ./data/:/data/solr/
+      - ./deploy/site/website_up.sh:/app/src/website_up.sh
+    environment:
+      SOLR_HOST: solr
